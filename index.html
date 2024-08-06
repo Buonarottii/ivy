@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="style.css">
+    <link rel="shortcut icon" href="world.svg" type="image/x-icon">
+    <title>ivy's wrld</title>
+</head>
+<body>
+    <nav>
+        <div class="ivyswrld"><h1><span class="I">I</span>V'<span class="s">s</span></h1>
+            <img src="/images/world.svg" alt="World">
+        </div>
+    </nav>
+
+    <section class="text-container">
+    
+        <div class="container">
+        <div class="line"></div>
+        <div class="line">there is a poem scratched</div>
+        <div class="line">onto the walls of my throat</div>
+        <div class="line">that speaks of the world</div>
+        <div class="line">noones ever heard it but its there</div>
+        <div class="line"></div>
+        <div class="line line2"></div>
+      </div>
+
+    </section>
+
+    <div class="wrapper">
+        <div class="videos videos1"></div>
+        <div class="videos videos2"></div>
+        <div class="videos videos3"></div>
+        <div class="videos videos4"></div>
+        <div class="videos videos5"></div>
+        <div class="videos videos6"></div>
+        <div class="videos videos7"></div>
+        <div class="videos videos8 "></div>
+    </div>
+
+    <section class="poem-section">
+        <div class="poem-container">
+            <div class="item item1" onclick="showPopup('popup1')">Lorem ipsum dolor sit amet.</div>
+            <div class="item item2" onclick="showPopup('popup2')">Consectetur adipiscing elit.</div>
+            <div class="item item3" onclick="showPopup('popup3')">Sed do eiusmod tempor incididunt.</div>
+            <div class="item item4" onclick="showPopup('popup4')">Ut enim ad minim veniam.</div>
+        </div>
+
+        <div class="popup" id="popup1">
+            <div class="popup-content">
+                <span class="close" onclick="hidePopup('popup1')">&times;</span>
+                <p>Popup Content 1</p>
+            </div>
+        </div>
+    
+        <div class="popup" id="popup2">
+            <div class="popup-content">
+                <span class="close" onclick="hidePopup('popup2')">&times;</span>
+                <p>Popup Content 2</p>
+            </div>
+        </div>
+    
+        <div class="popup" id="popup3">
+            <div class="popup-content">
+                <span class="close" onclick="hidePopup('popup3')">&times;</span>
+                <p>Popup Content 3</p>
+            </div>
+        </div>
+    
+        <div class="popup" id="popup4">
+            <div class="popup-content">
+                <span class="close" onclick="hidePopup('popup4')">&times;</span>
+                <p>Popup Content 4</p>
+            </div>
+        </div>
+    </section>
+
+    
+<script >
+        const container = document.querySelector('.container');
+const lines = document.querySelectorAll('.line');
+
+function updateActiveLines() {
+    const containerRect = container.getBoundingClientRect();
+    const containerCenter = containerRect.top + containerRect.height / 2;
+
+    lines.forEach(line => {
+        const lineRect = line.getBoundingClientRect();
+        const lineCenter = lineRect.top + lineRect.height / 2;
+        const distanceFromCenter = Math.abs(containerCenter - lineCenter);
+
+        line.classList.remove('active', 'semi-active');
+
+        if (distanceFromCenter < 25) {
+            line.classList.add('active');
+        } else if (distanceFromCenter < 50) {
+            line.classList.add('semi-active');
+        }
+    });
+}
+
+container.addEventListener('scroll', updateActiveLines);
+updateActiveLines();
+
+
+
+function showPopup(popupId) {
+    document.getElementById(popupId).style.display = 'flex';
+}
+
+function hidePopup(popupId) {
+    document.getElementById(popupId).style.display = 'none';
+}
+    </script>
+
+
+    <script>
+    </script>
+
+</body>
+
+</html>
+
+
+
+
