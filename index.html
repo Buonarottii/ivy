@@ -76,8 +76,68 @@
         </div>
     </section>
 
+    <script>
+        // Cache DOM elements
+        const container = document.querySelector('.container');
+        const lines = document.querySelectorAll('.line');
     
-<script >
+        // Throttle function to limit how often the scroll event handler runs
+        function throttle(func, limit) {
+            let lastFunc;
+            let lastRan;
+            return function() {
+                const context = this;
+                const args = arguments;
+                if (!lastRan) {
+                    func.apply(context, args);
+                    lastRan = Date.now();
+                } else {
+                    clearTimeout(lastFunc);
+                    lastFunc = setTimeout(function() {
+                        if ((Date.now() - lastRan) >= limit) {
+                            func.apply(context, args);
+                            lastRan = Date.now();
+                        }
+                    }, limit - (Date.now() - lastRan));
+                }
+            };
+        }
+    
+        function updateActiveLines() {
+            const containerRect = container.getBoundingClientRect();
+            const containerCenter = containerRect.top + containerRect.height / 2;
+    
+            lines.forEach(line => {
+                const lineRect = line.getBoundingClientRect();
+                const lineCenter = lineRect.top + lineRect.height / 2;
+                const distanceFromCenter = Math.abs(containerCenter - lineCenter);
+    
+                line.classList.remove('active', 'semi-active');
+    
+                if (distanceFromCenter < 25) {
+                    line.classList.add('active');
+                } else if (distanceFromCenter < 50) {
+                    line.classList.add('semi-active');
+                }
+            });
+        }
+    
+        // Apply throttle to the scroll event handler
+        container.addEventListener('scroll', throttle(updateActiveLines, 100));
+        updateActiveLines(); // Initial call to set active lines on page load
+    
+        // Popup functionality
+        function showPopup(popupId) {
+            document.getElementById(popupId).style.display = 'flex';
+        }
+    
+        function hidePopup(popupId) {
+            document.getElementById(popupId).style.display = 'none';
+        }
+    </script>
+
+    
+<!--<script >
         const container = document.querySelector('.container');
 const lines = document.querySelectorAll('.line');
 
@@ -112,12 +172,7 @@ function showPopup(popupId) {
 function hidePopup(popupId) {
     document.getElementById(popupId).style.display = 'none';
 }
-    </script>
-
-
-    <script>
-    </script>
-
+    </script>-->
 </body>
 
 </html>
